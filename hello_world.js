@@ -1,8 +1,22 @@
-function execute(someFunction, value) {
-    someFunction(value);
-}
+// Do something quick!
+console.log('Hello');
+// Do something big
+pauseComputer(5000, 'Long Thing Done', str => console.log(str));
+// Do something quick again!
+console.log('Goodbye!');
 
-execute(word => {console.log(word)}, 'Anything');
+
+
+
+
+
+
+
+
+
+function pauseComputer(ms, words, func) {
+    setTimeout(func, ms, words);
+}
 
 
 
