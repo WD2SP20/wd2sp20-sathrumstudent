@@ -1,22 +1,34 @@
-// Do something quick!
-console.log('Hello');
-// Do something big
-pauseComputer(5000, 'Long Thing Done', str => console.log(str));
-// Do something quick again!
-console.log('Goodbye!');
+const formidable = require('formidable'),
+      http = require('http'),
+      util = require('util');
+
+http.createServer(function(req, res) {
+    if (req.url == '/upload' && req.method.toLowerCase() == 'post') {
+        // parse file upload
+        const form = new formidable.IncomingForm();
+        form.parse(req, function(err, fields, files) {
+            console.log('handle the form');
+            res.writeHead(200, {'content-type': 'text/plain'});
+            res.write('received upload:\n\n');
+            res.end(util.inspect({fields: fields, files: files}));
+        })
+        return;
+    }
+    // Show the form
+    res.writeHead(200, {'content-type': 'text/html'});
+    res.end(
+        '<form action="/upload" enctype="multipart/form-data" method="post">'+
+        '<input type="text" name="title"><br>'+
+        '<input type="file" name="upload" multiple="multiple"><br>'+
+        '<input type="submit" value="Upload">'+
+        '</form>'
+    );
+}).listen(8080);
 
 
 
 
 
-
-
-
-
-
-function pauseComputer(ms, words, func) {
-    setTimeout(func, ms, words);
-}
 
 
 
